@@ -10,16 +10,36 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+
 
 @Composable
-fun LoginView(navigateToPost: () -> Unit){
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(start = 50.dp, top = 100.dp)){
+fun LoginView(
+    navigateToPost: () -> Unit,
+    viewModel: LoginVIewModel = hiltViewModel()
+) {
 
-        Column(modifier =Modifier.fillMaxWidth() ){
-            TextField(value = "User", onValueChange = {})
-            TextField(value = "Password", onValueChange = {})
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 50.dp, top = 100.dp)
+    ) {
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            TextField(
+                value = viewModel.loginValue.user,
+                onValueChange = {
+                    viewModel.obtainUserDataFromView(it)
+
+                }
+            )
+            TextField(
+                value = viewModel.loginValue.password,
+                onValueChange = {
+                    viewModel.obtainPasswordDataFromView(it)
+
+                }
+            )
         }
 
         Text(text = "Login")
